@@ -1,68 +1,31 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Training hooks with Team Board App
 
-## Available Scripts
+> This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). [_More info here_](./docs/REACT_DOCS)
 
-In the project directory, you can run:
+## Concepts
 
-### `npm start`
+**_Disclaimer: All of this concepts is only my understanding of react hooks I used in the app_**
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+It is worthy to explain what is react hooks. These are new functionality of react library to extend the capability of functional components to manage its own state and life cycle. Usually functional components were only used as dummy components (only to show data) due to its lack of state and life cycle, so in order to encourage its used as smart components (manage and show data), hooks were created.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+```javascript
+import React, { useState } from "react";
+```
 
-### `npm test`
+- _useState_: It is a hook to enable a component to have state. It should called with a initial value and returns an array with two elements, first one with the actual state and second a function to fill the state whenever it is needed.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```javascript
+// here the initial value is an empty array
+// setUsers will be used to fill users
+const [users, setUsers] = useState([]);
+```
 
-### `npm run build`
+- _useEffect_: Usually when a component needs to got data from an endpoint or sets an html event its life cycle is used (functions like componentDidMount, componentDidUpdate, componentWillUnmount). For functional components we have useEffect, which receives a function and an array of parameters. The function is executed while the component is mounted. Also it will be executed when component is unmounted, usually when it is needed to unsubscribe some event, for that the function should return a function with those unsubscriptions. The second parameter is an array of component variables so when these change the hook will be executed again.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+```javascript
+useEffect(() => {
+  fetch("https://jsonplaceholder.typicode.com/users")
+    .then(res => res.json())
+    .then(data => setUsers(data));
+});
+```
