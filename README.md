@@ -21,11 +21,12 @@ const [users, setUsers] = useState([]);
 ```
 
 - _useEffect_: Usually when a component needs to got data from an endpoint or sets an html event its life cycle is used (functions like componentDidMount, componentDidUpdate, componentWillUnmount). For functional components we have useEffect, which receives a function and an array of parameters. The function is executed while the component is mounted. Also it will be executed when component is unmounted, usually when it is needed to unsubscribe some event, for that the function should return a function with those unsubscriptions. The second parameter is an array of component variables so when these change the hook will be executed again.
+> Tip: To make requests, adding an empty array the call runs one time otherwise will be executed forever
 
 ```javascript
 useEffect(() => {
   fetch("https://jsonplaceholder.typicode.com/users")
     .then(res => res.json())
     .then(data => setUsers(data));
-});
+}, []);
 ```

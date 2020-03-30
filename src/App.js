@@ -2,12 +2,16 @@ import React, { useState, useEffect } from "react";
 
 const App = () => {
   const [users, setUsers] = useState([]);
+  const [todos, setTodos] = useState([]);
 
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
       .then(res => res.json())
       .then(data => setUsers(data));
-  });
+    fetch("https://jsonplaceholder.typicode.com/todos")
+      .then(res => res.json())
+      .then(data => setTodos(data));
+  }, []);
 
   return (
     <>
@@ -19,6 +23,14 @@ const App = () => {
             <li>
               {user.name} from {user.company.name}
             </li>
+          ))}
+        </ul>
+      </section>
+      <section>
+        <h2>Todos</h2>
+        <ul>
+          {todos.map(todo => (
+            <li>{todo.title}</li>
           ))}
         </ul>
       </section>
